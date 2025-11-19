@@ -1,59 +1,49 @@
 #include "consoleUtils.h"
 #include <cmath>
-#include <vector>
 
 using namespace std;
 
 void generateMagicSquare(int squareLength) {
-  // 1. Initial position: Center of the top row (0-based indexing)
+  // Initial position: center of the top row
   int currentSquareRow = 0;
   int currentSquareCol = (squareLength / 2);
 
-  // Total number of elements in the square
   int totalElements = squareLength * squareLength;
-  int cellWidth = to_string(totalElements).length() + 4; // For spacing
+  int cellWidth = to_string(totalElements).length() + 4; // spacing width
 
-  // Calculate the terminal starting position for the square (centered display)
+  // Display offsets
   int startRow = 4;
   int startCol = 5;
 
-  // --- Set curser position ---
-  int currentScreenRow = startRow + currentSquareRow;
-  int currentScreenCol = startCol + currentSquareCol * cellWidth;
+  // Initial screen position
+  int screenRow = startRow + currentSquareRow;
+  int screenCol = startCol + currentSquareCol * cellWidth;
 
-  // Calculate the Magic Constant (sum of each row/col/diagonal)
+  // Magic Constant
   long long magicSum = (long long)squareLength * (squareLength * squareLength + 1) / 2;
 
-  // Format the number to be centered/aligned in its cell
-  string numberStr = to_string(1);
-  string outputStr = "[ " + numberStr + " ]";
-
-  print(outputStr, currentScreenRow, currentScreenCol, BLUE);
-
-  delay(200); // Delay for animation effect
+  print("[ " + to_string(1) + " ]", screenRow, screenCol, BLUE);
+  delay(200);
 
   for (int i = 2; i <= totalElements; i++) {
-    // --- Prepare for the next number (k+1) ---
-    // Update the position for the next iteration
+    // Move logic
     if ((i - 1) % squareLength == 0) {
+      // Move down
       currentSquareRow = (currentSquareRow + 1) % squareLength; // Row = Row + 1
     } else {
+      // Move up - right
       currentSquareRow = (currentSquareRow - 1 + squareLength) % squareLength; // Row = Row - 1
       currentSquareCol = (currentSquareCol + 1) % squareLength;                // Col = Col + 1
     }
 
-    currentScreenRow = startRow + currentSquareRow;
-    currentScreenCol = startCol + currentSquareCol * cellWidth;
+    screenRow = startRow + currentSquareRow;
+    screenCol = startCol + currentSquareCol * cellWidth;
 
-    numberStr = to_string(i);
-    outputStr = "[ " + numberStr + " ]";
-
-    print(outputStr, currentScreenRow, currentScreenCol, BLUE);
-
+    print("[ " + to_string(i) + " ]", screenRow, screenCol, BLUE);
     delay(200);
   }
 
-  // --- Display Result ---
+  // Completion messages
   int result_row = startRow + squareLength + 1;
   print("Magic Square Generation Complete!", result_row, startCol, GREEN);
   print("Side length (N): " + to_string(squareLength), result_row + 1, startCol, GREEN);
