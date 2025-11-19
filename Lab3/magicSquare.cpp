@@ -33,24 +33,25 @@ void generateMagicSquare(int squareLength) {
   delay(200); // Delay for animation effect
 
   for (int i = 2; i <= totalElements; i++) {
-
+    // --- Prepare for the next number (k+1) ---
+    // Update the position for the next iteration
     if ((i - 1) % squareLength == 0) {
-
+      currentSquareRow = (currentSquareRow + 1) % squareLength; // Row = Row + 1
     } else {
+      currentSquareRow = (currentSquareRow - 1 + squareLength) % squareLength; // Row = Row - 1
+      currentSquareCol = (currentSquareCol + 1) % squareLength;                // Col = Col + 1
     }
 
     currentScreenRow = startRow + currentSquareRow;
     currentScreenCol = startCol + currentSquareCol * cellWidth;
 
+    numberStr = to_string(i);
+    outputStr = "[ " + numberStr + " ]";
+
     print(outputStr, currentScreenRow, currentScreenCol, BLUE);
 
-    delay(200); // Delay for animation effect
+    delay(200);
   }
-  // --- Prepare for the next number (k+1) ---
-  // Move diagonally up-right (Rule 1 & 2)
-  // Update the position for the next iteration
-  currentSquareRow = (currentSquareRow - 1 + squareLength) % squareLength; // Wrap top (Rule 3)
-  currentSquareCol = (currentSquareCol + 1) % squareLength;                // Wrap right (Rule 4)
 
   // --- Display Result ---
   int result_row = startRow + squareLength + 1;
