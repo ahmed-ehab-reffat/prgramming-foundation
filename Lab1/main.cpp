@@ -4,6 +4,7 @@
 using namespace std;
 
 int main() {
+  clearScreen();
   gotoxy(4, 6);
   setColor(RED);
   cout << "Hello, World!";

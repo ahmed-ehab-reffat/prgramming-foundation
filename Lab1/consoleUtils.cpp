@@ -18,11 +18,10 @@ void setColor(int color) {
 }
 
 void resetColor() {
-  cout << "\033[0m";
-  cout.flush();
+  setColor(0);
 }
 
-void print(string text, int row, int col, int color) {
+void print(string text, int row, int col, int color = 0) {
   gotoxy(row, col);
   setColor(color);
   cout << text << endl;

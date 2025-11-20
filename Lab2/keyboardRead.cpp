@@ -1,9 +1,53 @@
+#include "keyboardRead.h"
 #include "consoleUtils.h"
+
+#ifdef _WIN32
+
+#include <conio.h>
+#include <windows.h>
+
+// No-op on Windows; _getch reads keys without requiring Enter.
+void enableRawMode() {
+}
+void disableRawMode() {
+}
+
+int kbhitBlock() {
+  int ch = _getch();
+  return ch;
+}
+
+int kbhitNonblock() {
+  if (_kbhit())
+    return _getch();
+  return 0;
+}
+
+int getKey() {
+  int c = kbhitBlock();
+
+  if (c == ENTER) {
+    return ENTER;
+  }
+
+  if (c == ESC) {
+    return ESC;
+  }
+
+  // Extended keys: returned as 0 or 224, followed by code
+  if (c == 0 || c == 224) {
+    return kbhitNonblock();
+  }
+
+  return 0;
+}
+
+#else
+
 #include <fcntl.h>
 #include <termios.h>
 #include <unistd.h>
 
-// Enable raw mode
 void enableRawMode() {
   termios term;
   tcgetattr(STDIN_FILENO, &term);
@@ -11,7 +55,7 @@ void enableRawMode() {
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-// Disable raw mode (optional cleanup)
+// (optional cleanup)
 void disableRawMode() {
   termios term;
   tcgetattr(STDIN_FILENO, &term);
@@ -45,24 +89,26 @@ int kbhitNonblock() {
 int getKey() {
   int c = kbhitBlock();
 
-  if (c == '\n') { // ENTER
-    return '\n';
+  if (c == ENTER) {
+    return ENTER;
   }
 
-  if (c == '\033') { // ESC
+  if (c == ESC) {
     delay(1);
 
     c = kbhitNonblock();
     if (c == '[') {
       delay(1);
 
-      c = kbhitNonblock();
-      return c;
+      return kbhitNonblock();
 
     } else if (c == 0) {
-      return '\033';
+      return ESC;
     }
   }
 
   return 0;
 }
+
+#endif //_WIN32
+

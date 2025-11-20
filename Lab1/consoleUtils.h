@@ -14,7 +14,7 @@ void setColor(int color);
 
 void resetColor();
 
-void print(std::string text, int row, int col, int color);
+void print(std::string text, int row, int col, int color = 0);
 
 void clearScreen();
 

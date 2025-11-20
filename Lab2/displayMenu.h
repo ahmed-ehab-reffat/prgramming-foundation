@@ -7,8 +7,6 @@ void displayMenu(int selected);
 
 int changeSelected(int selected);
 
-int navigateMenu(int key, int selected);
-
 void showScreen(std::string title);
 
 #endif // DISPLAY_MENU_H_INCLUDED
