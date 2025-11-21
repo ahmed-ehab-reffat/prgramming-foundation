@@ -7,7 +7,7 @@ using namespace std;
 // \033 is the escape character (ESC)
 // [y;xH is the command to set cursor position
 
-void gotoxy(int row, int col) {
+void gotoRowCol(int row, int col) {
   cout << "\033[" << row << ";" << col << "H";
   cout.flush();
 }
@@ -22,7 +22,7 @@ void resetColor() {
 }
 
 void print(string text, int row, int col, int color = 0) {
-  gotoxy(row, col);
+  gotoRowCol(row, col);
   setColor(color);
   cout << text << endl;
   resetColor();
@@ -30,7 +30,7 @@ void print(string text, int row, int col, int color = 0) {
 
 void clearScreen() {
   cout << "\033[2J";
-  gotoxy(0, 0);
+  gotoRowCol(0, 0);
 }
 
 void delay(int milliseconds) {

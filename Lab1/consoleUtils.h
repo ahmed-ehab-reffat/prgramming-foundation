@@ -8,7 +8,7 @@
 #define YELLOW 33
 #define BLUE 34
 
-void gotoxy(int row, int col);
+void gotoRowCol(int row, int col);
 
 void setColor(int color);
 

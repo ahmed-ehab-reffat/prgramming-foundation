@@ -5,11 +5,11 @@ using namespace std;
 
 int main() {
   clearScreen();
-  gotoxy(4, 6);
+  gotoRowCol(4, 6);
   setColor(RED);
   cout << "Hello, World!";
 
-  gotoxy(6, 4);
+  gotoRowCol(6, 4);
   setColor(GREEN);
   cout << "Another text here!" << endl;
 
