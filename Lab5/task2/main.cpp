@@ -1,5 +1,6 @@
 #include "consoleUtils.h"
 #include "displayMenu.h"
+#include "employeeData.h"
 #include "keyboardRead.h"
 #include <iostream>
 
@@ -8,11 +9,12 @@ using namespace std;
 int main() {
   int selected = 1;
   bool inMenu = true;
+  bool inNew = false;
+  bool inDisplay = false;
 
   while (true) {
     if (inMenu) {
       displayMenu(selected);
-
       int key = getKey();
 
       switch (key) {
@@ -37,19 +39,27 @@ int main() {
       case ENTER:
         if (selected == 1) {
           inMenu = false;
-          showScreen("New");
+          inNew = true;
         } else if (selected == 2) {
           inMenu = false;
-          showScreen("Display");
+          inDisplay = true;
         } else if (selected == 3) {
           return 0; // or make an exit flag // Exit program
         }
         break;
       }
-
-    } else {
+    } else if (inNew) {
+      createEmployee();
       int key = getKey();
       if (key == ESC) {
+        inNew = false;
+        inMenu = true;
+      }
+    } else if (inDisplay) {
+      displayEmployees();
+      int key = getKey();
+      if (key == ESC) {
+        inDisplay = false;
         inMenu = true;
       }
     }
