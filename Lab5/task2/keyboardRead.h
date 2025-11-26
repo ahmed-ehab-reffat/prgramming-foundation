@@ -1,6 +1,8 @@
 #ifndef KEYBOARD_READ_H_INCLUDED
 #define KEYBOARD_READ_H_INCLUDED
 
+#include <string>
+
 #ifdef _WIN32
 
 #define UP 72
@@ -22,8 +24,9 @@
 #define END 'F'
 #define ENTER '\n'
 #define ESC '\033'
+#define BACKSPACE 127
 
-#endif
+#endif //_WIN32
 
 void enableRawMode();
 
@@ -34,5 +37,9 @@ int kbhitBlock();
 int kbhitNonblock();
 
 int getKey();
+
+int getString(std::string &str);
+
+int getInt();
 
 #endif // KEYBOARD_READ_H_INCLUDED

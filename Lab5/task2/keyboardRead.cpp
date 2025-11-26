@@ -1,5 +1,7 @@
 #include "keyboardRead.h"
 #include "consoleUtils.h"
+#include <iostream>
+using namespace std;
 
 #ifdef _WIN32
 
@@ -108,7 +110,49 @@ int getKey() {
   }
 
   disableRawMode();
-  return 0;
+  return c;
 }
+
+int getInt() {
+  int number = 0;
+  while (true) {
+    int key = getKey();
+
+    if (key >= '0' and key <= '9') {
+      number = number * 10 + (key - '0');
+      cout << (key - '0');
+      cout.flush();
+    } else if (key == BACKSPACE && number > 0) {
+      number = number / 10;
+      cout << "\b \b";
+      cout.flush();
+
+    } else if (key == ENTER) {
+      return number;
+    } else if (key == ESC) {
+      return -1;
+    }
+  }
+};
+
+int getString(string &str) {
+  while (true) {
+    int key = getKey();
+
+    if (key >= 'A' and key <= 'z') {
+      str += key;
+      cout << char(key);
+      cout.flush();
+    } else if (key == BACKSPACE && !str.empty()) {
+      str.pop_back();
+      cout << "\b \b";
+      cout.flush();
+    } else if (key == ENTER) {
+      return 0;
+    } else if (key == ESC) {
+      return -1;
+    }
+  }
+};
 
 #endif //_WIN32
