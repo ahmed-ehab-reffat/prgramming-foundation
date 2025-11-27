@@ -12,7 +12,8 @@
 #define HOME 71
 #define END 79
 #define ENTER 13
-#define ESC 27
+#define ESC '\033'
+#define BACKSPACE '\b'
 
 #else
 
@@ -38,8 +39,8 @@ int kbhitNonblock();
 
 int getKey();
 
-int getString(std::string &str);
-
 int getInt();
+
+int getName(std::string &str);
 
 #endif // KEYBOARD_READ_H_INCLUDED

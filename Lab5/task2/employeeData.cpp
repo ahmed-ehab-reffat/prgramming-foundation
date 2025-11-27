@@ -23,7 +23,7 @@ void createEmployee() {
     print("First Name:", 4, 10, BLUE);
     gotoRowCol(4, 22);
     string name = "";
-    if (getString(name) == -1) {
+    if (getName(name) == -1) {
       return;
     }
     emp.firstName = name;
@@ -31,7 +31,7 @@ void createEmployee() {
     print("Last Name:", 5, 10, BLUE);
     gotoRowCol(5, 22);
     name = "";
-    if (getString(name) == -1) {
+    if (getName(name) == -1) {
       return;
     }
     emp.lastName = name;

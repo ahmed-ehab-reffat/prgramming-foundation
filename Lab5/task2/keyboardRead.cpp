@@ -1,7 +1,6 @@
 #include "keyboardRead.h"
 #include "consoleUtils.h"
 #include <iostream>
-using namespace std;
 
 #ifdef _WIN32
 
@@ -36,7 +35,7 @@ int getKey() {
     return kbhitNonblock();
   }
 
-  return 0;
+  return c;
 }
 
 #else
@@ -113,6 +112,8 @@ int getKey() {
   return c;
 }
 
+#endif //_WIN32
+
 int getInt() {
   int number = 0;
   while (true) {
@@ -120,12 +121,12 @@ int getInt() {
 
     if (key >= '0' and key <= '9') {
       number = number * 10 + (key - '0');
-      cout << (key - '0');
-      cout.flush();
+      std::cout << (key - '0');
+      std::cout.flush();
     } else if (key == BACKSPACE && number > 0) {
       number = number / 10;
-      cout << "\b \b";
-      cout.flush();
+      std::cout << "\b \b";
+      std::cout.flush();
 
     } else if (key == ENTER) {
       return number;
@@ -135,18 +136,18 @@ int getInt() {
   }
 };
 
-int getString(string &str) {
+int getName(std::string &str) {
   while (true) {
     int key = getKey();
 
     if (key >= 'A' and key <= 'z') {
       str += key;
-      cout << char(key);
-      cout.flush();
+      std::cout << char(key);
+      std::cout.flush();
     } else if (key == BACKSPACE && !str.empty()) {
       str.pop_back();
-      cout << "\b \b";
-      cout.flush();
+      std::cout << "\b \b";
+      std::cout.flush();
     } else if (key == ENTER) {
       return 0;
     } else if (key == ESC) {
@@ -154,5 +155,3 @@ int getString(string &str) {
     }
   }
 };
-
-#endif //_WIN32
