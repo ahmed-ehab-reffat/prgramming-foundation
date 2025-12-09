@@ -1,36 +1,45 @@
 #include "consoleUtils.h"
+#include "displayMenu.h"
+#include "employeeData.h"
 #include "keyboardRead.h"
-#include "textEditor.h"
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 
 int main() {
-  EditorState editor;
-  initEditor(editor, 1024);
 
   while (true) {
     clearScreen();
-    print("==== Simple Text Editor ====", 2, 5, GREEN);
-    print("Enter file name to edit: ", 5, 2, BLUE);
-    gotoRowCol(5, 27);
+    print("==== Main Menu ====", 2, 2, GREEN);
+    print("Press ESC to exit", 7, 2, RED);
 
+    print("Enter file name: ", 4, 2, BLUE);
+    gotoRowCol(4, 19);
     string fileName = "";
     if (getName(fileName) == -1) {
-      print("Exiting text editor...", 8, 2, RED);
-      cleanupEditor(editor);
+      clearScreen();
       return 0;
     }
+    clearScreen();
 
-    if (fileName.empty()) {
-      print("File name cannot be empty!", 8, 2, RED);
-      delay(1500);
-      continue;
+    ifstream file(fileName);
+
+    if (!file.is_open()) ;
+
+    int size = 1024;
+    char ch;
+    int cursorIndex = 0;
+    char * textPtr = new char[size];
+    while (file.get(ch)) {
+      textPtr[cursorIndex] = ch;
+      cursorIndex++;
     }
 
-    editFile(editor, fileName);
+
+    file.close();
+    delay(6000);
   }
 
-  cleanupEditor(editor);
   return 0;
 }
