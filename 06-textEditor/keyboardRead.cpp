@@ -112,7 +112,7 @@ int getKey() {
   return c;
 }
 
-#endif //_WIN32
+#endif
 
 int getInt() {
   int number = 0;
@@ -140,12 +140,12 @@ int getName(std::string &str) {
   while (true) {
     int key = getKey();
 
-    bool isValidName = ((key >= 'A' and key <= 'Z') ||
-                        (key >= 'a' and key <= 'z') ||
-                        (key >= '0' and key <= '9') ||
-                        key == '_' || key == '-' || key == '.');
+    bool isValidNameKey = ((key >= 'A' and key <= 'Z') ||
+                           (key >= 'a' and key <= 'z') ||
+                           (key >= '0' and key <= '9') ||
+                           key == '_' || key == '-' || key == '.');
 
-    if (isValidName) {
+    if (isValidNameKey) {
       str += key;
       std::cout << char(key);
       std::cout.flush();
